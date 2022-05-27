@@ -1,0 +1,14 @@
+[features]
+seeds = false
+[programs.localnet]
+crowd_funding_solana_program_v2 = "Go9AcEhLBcyF8i79tXPJRQJi2ETg8mKnSCxzVxpQejJP"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "localnet"
+wallet = "/Users/theogaillard/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
