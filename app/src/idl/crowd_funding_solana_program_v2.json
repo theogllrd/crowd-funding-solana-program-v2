@@ -70,5 +70,8 @@
       "name": "DescriptionTooLong",
       "msg": "The provided description should be 280 characters long maximum."
     }
-  ]
+  ],
+  "metadata": {
+    "address": "Go9AcEhLBcyF8i79tXPJRQJi2ETg8mKnSCxzVxpQejJP"
+  }
 }

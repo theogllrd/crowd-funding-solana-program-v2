@@ -3,7 +3,13 @@ import React, { useState } from 'react';
 import { Outlet, Link } from "react-router-dom";
 import Header from "./components/Header";
 
+// because of an error related to buffer (1/2)
+import { Buffer } from 'buffer';
+
 export const WalletConnectedContext = React.createContext();
+
+// because of an error related to buffer (2/2)
+window.Buffer = Buffer;
 
 function App() {
 
