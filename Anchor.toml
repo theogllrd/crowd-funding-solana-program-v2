@@ -12,3 +12,4 @@ wallet = "/Users/theogaillard/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+copy-idl = "mkdir -p app/src/idl && cp target/idl/crowd_funding_solana_program_v2.json app/src/idl/crowd_funding_solana_program_v2.json"
