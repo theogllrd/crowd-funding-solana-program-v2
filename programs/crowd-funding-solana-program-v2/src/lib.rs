@@ -30,6 +30,10 @@ pub mod crowd_funding_solana_program_v2 {
         campaign.amount_donated = 0;
         Ok(())
     }
+
+    pub fn delete_campaign(ctx: Context<DeleteTweet>) -> Result<()> {
+        Ok(())
+    }
 }
 
 // Definition of the context.
@@ -40,6 +44,12 @@ pub struct CreateCampaign<'info> {
     #[account(mut)]
     pub author: Signer<'info>, // the signer of the transaction.
     pub system_program: Program<'info, System>, // the official System_Program.
+}
+#[derive(Accounts)]
+pub struct DeleteTweet<'info> {
+    #[account(mut, has_one = author, close = author)]
+    pub campaign: Account<'info, Campaign>,
+    pub author: Signer<'info>,
 }
 
 // Definition of the structure of the campaign account.

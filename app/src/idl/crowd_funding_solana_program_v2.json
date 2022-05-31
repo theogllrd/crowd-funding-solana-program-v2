@@ -31,6 +31,22 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "deleteCampaign",
+      "accounts": [
+        {
+          "name": "campaign",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "author",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [

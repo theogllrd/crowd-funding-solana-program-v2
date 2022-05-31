@@ -31,7 +31,7 @@ export default function PageHome() {
 
     return (
         <div className="flex">
-            <CampaignList campaignList={campaignList} />
+            <CampaignList campaignList={campaignList} getCampaignList={getCampaignList} />
             <WalletConnectedContext.Consumer>
                 {isWalletConnected => isWalletConnected ? (<CampaignForm classbackCampaignAdded={addCampaign} />) : null}
             </WalletConnectedContext.Consumer>
