@@ -4,7 +4,7 @@ export class Campaign {
         this.author = accountData.author
         this.name = accountData.name
         this.description = accountData.description
-        this.amount_donated = accountData.amount_donated
+        this.amount_donated = accountData.amountDonated.negative
     }
     get key() {
         return this.publicKey.toBase58()

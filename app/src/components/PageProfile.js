@@ -1,7 +1,7 @@
 export default function PageProfile() {
     return (
         <div className="">
-            <h2>PageProfile</h2>
+            <h1 className="text-center pt-40">Work in progress !</h1>
         </div >
     );
 }
