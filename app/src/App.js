@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 
 // because of an error related to buffer (1/2)
@@ -38,7 +38,7 @@ function App() {
         alert('Your not connected');
         return;
       }
-      const response = await window.solana.disconnect();
+      await window.solana.disconnect();
       setWalletConnected(null);
     } catch (error) {
       console.log(error);

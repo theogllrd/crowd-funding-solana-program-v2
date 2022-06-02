@@ -1,13 +1,17 @@
 [features]
 seeds = false
+
 [programs.localnet]
+crowd_funding_solana_program_v2 = "Go9AcEhLBcyF8i79tXPJRQJi2ETg8mKnSCxzVxpQejJP"
+
+[programs.devnet]
 crowd_funding_solana_program_v2 = "Go9AcEhLBcyF8i79tXPJRQJi2ETg8mKnSCxzVxpQejJP"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "/Users/theogaillard/.config/solana/id.json"
 
 [scripts]
