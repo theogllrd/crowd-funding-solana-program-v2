@@ -5,7 +5,7 @@ export default function CampaignForm({ classbackCampaignAdded }) {
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [imageLink, setImageLink] = useState('');
+    const [image_link, setImageLink] = useState('');
 
 
     const handleNameChange = event => {
@@ -29,7 +29,7 @@ export default function CampaignForm({ classbackCampaignAdded }) {
         // check if name is defined
         if (name) {
             // create the campaign in the blockchain
-            await CreateCampaign(name, description);
+            await CreateCampaign(name, description, image_link);
 
             // update de campaignList
             classbackCampaignAdded();
@@ -88,7 +88,7 @@ export default function CampaignForm({ classbackCampaignAdded }) {
                                     </label>
                                     <div className="mt-1 flex rounded-md shadow-sm">
                                         <input
-                                            value={imageLink}
+                                            value={image_link}
                                             onChange={handleimageLinkChange}
                                             type="url"
                                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
@@ -97,7 +97,7 @@ export default function CampaignForm({ classbackCampaignAdded }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                            <div className="px-4 py-3 text-right sm:px-6">
                                 <button
                                     onClick={handleClick}
                                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

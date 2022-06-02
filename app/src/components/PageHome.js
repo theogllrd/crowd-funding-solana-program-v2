@@ -30,11 +30,12 @@ export default function PageHome() {
     }
 
     return (
-        <div className="flex">
-            <CampaignList campaignList={campaignList} getCampaignList={getCampaignList} />
-            <WalletConnectedContext.Consumer>
-                {isWalletConnected => isWalletConnected ? (<CampaignForm classbackCampaignAdded={addCampaign} />) : null}
-            </WalletConnectedContext.Consumer>
-        </div >
+        walletConnected ?
+            <div className="flex">
+                <CampaignList campaignList={campaignList} getCampaignList={getCampaignList} />
+                <WalletConnectedContext.Consumer>
+                    {isWalletConnected => isWalletConnected ? (<CampaignForm classbackCampaignAdded={addCampaign} />) : null}
+                </WalletConnectedContext.Consumer>
+            </div > : <div className="flex justify-center pt-20">Please connect your Phantom Wallet to start using the app</div>
     );
 }

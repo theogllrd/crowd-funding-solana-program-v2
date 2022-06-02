@@ -10,6 +10,7 @@ pub mod crowd_funding_solana_program_v2 {
         ctx: Context<CreateCampaign>,
         name: String,
         description: String,
+        image_link: String,
     ) -> Result<()> {
         // We get all the account from the context.
         let campaign: &mut Account<Campaign> = &mut ctx.accounts.campaign;
@@ -22,16 +23,20 @@ pub mod crowd_funding_solana_program_v2 {
         if description.chars().count() > 280 {
             return Err(ErrorCode::DescriptionTooLong.into());
         }
+        if image_link.chars().count() > 200 {
+            return Err(ErrorCode::ImageLinkTooLong.into());
+        }
 
         // Set all the values in the campaign account.
         campaign.author = *author.key;
         campaign.name = name;
         campaign.description = description;
         campaign.amount_donated = 0;
+        campaign.image_link = image_link;
         Ok(())
     }
 
-    pub fn delete_campaign(ctx: Context<DeleteTweet>) -> Result<()> {
+    pub fn delete_campaign(_ctx: Context<DeleteTweet>) -> Result<()> {
         Ok(())
     }
 }
@@ -59,6 +64,7 @@ pub struct Campaign {
     pub name: String,
     pub description: String,
     pub amount_donated: u64,
+    pub image_link: String,
 }
 
 // Usefull constants for sizing properties.
@@ -67,6 +73,7 @@ const PUBLIC_KEY_LENGTH: usize = 32;
 const STRING_LENGTH_PREFIX: usize = 4; // Stores the size of the string.
 const MAX_NAME_LENGTH: usize = 50 * 4; // 50 chars max for the campaign name.
 const MAX_DESCRIPTION_LENGTH: usize = 280 * 4; // 280 chars max for the campaign description.
+const MAX_IMAGE_LINK_LENGTH: usize = 200 * 4; // 200 chars max for the campaign image link.
 const MAX_AMOUNT_DONATED_LENGTH: usize = 8;
 
 impl Campaign {
@@ -74,6 +81,7 @@ impl Campaign {
         + PUBLIC_KEY_LENGTH // Author.
         + STRING_LENGTH_PREFIX + MAX_NAME_LENGTH // Name.
         + STRING_LENGTH_PREFIX + MAX_DESCRIPTION_LENGTH // Description.
+        + STRING_LENGTH_PREFIX + MAX_IMAGE_LINK_LENGTH // Image Link.
         + MAX_AMOUNT_DONATED_LENGTH; // Amount donated.
 }
 
@@ -83,4 +91,6 @@ pub enum ErrorCode {
     NameTooLong,
     #[msg("The provided description should be 280 characters long maximum.")]
     DescriptionTooLong,
+    #[msg("The provided image link should be 200 characters long maximum.")]
+    ImageLinkTooLong,
 }

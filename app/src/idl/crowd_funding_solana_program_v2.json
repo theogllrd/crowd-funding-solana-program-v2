@@ -29,6 +29,10 @@
         {
           "name": "description",
           "type": "string"
+        },
+        {
+          "name": "imageLink",
+          "type": "string"
         }
       ]
     },
@@ -70,6 +74,10 @@
           {
             "name": "amountDonated",
             "type": "u64"
+          },
+          {
+            "name": "imageLink",
+            "type": "string"
           }
         ]
       }
@@ -85,6 +93,11 @@
       "code": 6001,
       "name": "DescriptionTooLong",
       "msg": "The provided description should be 280 characters long maximum."
+    },
+    {
+      "code": 6002,
+      "name": "ImageLinkTooLong",
+      "msg": "The provided image link should be 200 characters long maximum."
     }
   ],
   "metadata": {

@@ -3,7 +3,7 @@ import { Campaign } from './../models/Campaign'
 import { getProgram } from './getProgram';
 
 // 1. Define the CreateCampaign endpoint.
-export const CreateCampaign = async (name, description) => {
+export const CreateCampaign = async (name, description, image_link) => {
 
     const program = getProgram();
 
@@ -12,7 +12,7 @@ export const CreateCampaign = async (name, description) => {
 
     // Send a "createCampaign" instruction with the right data and the right accounts.
     try {
-        await program.rpc.createCampaign(name, description, {
+        await program.rpc.createCampaign(name, description, image_link, {
             accounts: {
                 author: window.solana.publicKey,
                 campaign: campaign.publicKey,
