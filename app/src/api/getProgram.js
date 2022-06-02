@@ -14,7 +14,7 @@ const commitment = 'processed'
 const programID = new PublicKey(idl.metadata.address);
 
 export const getProgram = () => {
-    const wallet = window.solana | undefined
+    const wallet = window.solana
     //const connection = new Connection('http://127.0.0.1:8899', commitment)
     const connection = new Connection(network, commitment)
     const provider = new AnchorProvider(connection, wallet, { preflightCommitment, commitment })
