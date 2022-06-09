@@ -1,15 +1,18 @@
-import { WalletConnectedContext } from './../App';
-import { deleteCampaign } from '../api/delete-campaign';
+
+import { deleteCampaign } from '../api/deleteCampaign';
 import { Link } from "react-router-dom";
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
 export default function CampaignCard(props) {
 
     const { name, description, amount_donated, author, publicKey, image_link } = props.campaign;
 
+    const wallet = useWallet();
+    const { connection } = useConnection();
 
     const handleDeleteCampaign = async () => {
         // we call the function to delete the campaign from the blockchain
-        await deleteCampaign(props.campaign);
+        await deleteCampaign(wallet, connection, props.campaign);
         // we call the callback function to update the campaign list
         props.getCampaignList();
     }
@@ -38,20 +41,16 @@ export default function CampaignCard(props) {
                     {description.slice(0, 100) + '...'}
                 </p>
                 <div className="absolute bottom-5 right-5">
-                    <WalletConnectedContext.Consumer>
-                        {isWalletConnected => isWalletConnected ?
-                            isWalletConnected == author ?
-                                <button
-                                    onClick={handleDeleteCampaign}
-                                    className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300">
-                                    Delete
-                                </button>
-                                :
-                                <button
-                                    className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                                    Donate
-                                </button> : null}
-                    </WalletConnectedContext.Consumer>
+                    {wallet.connected ? wallet.publicKey.toBase58() == author ? <button
+                        onClick={handleDeleteCampaign}
+                        className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300">
+                        Delete
+                    </button>
+                        :
+                        <button
+                            className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                            Donate
+                        </button> : null}
                 </div>
             </div>
         </div>

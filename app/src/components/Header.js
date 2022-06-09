@@ -5,10 +5,40 @@ import { Popover, Transition } from '@headlessui/react'
 import {
     MenuIcon,
     XIcon,
-} from '@heroicons/react/outline'
-import { WalletConnectedContext } from './../App';
+} from '@heroicons/react/outline';
+
+import {
+    WalletModalProvider,
+    WalletDisconnectButton,
+    WalletMultiButton
+} from '@solana/wallet-adapter-react-ui';
+/*
+import { FC, useMemo } from 'react';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import {
+    GlowWalletAdapter,
+    PhantomWalletAdapter,
+    SlopeWalletAdapter,
+    SolflareWalletAdapter,
+    SolletExtensionWalletAdapter,
+    SolletWalletAdapter,
+    TorusWalletAdapter,
+} from '@solana/wallet-adapter-wallets';
+import {
+    WalletModalProvider,
+    WalletDisconnectButton,
+    WalletMultiButton
+} from '@solana/wallet-adapter-react-ui';
+import { clusterApiUrl } from '@solana/web3.js';*/
+
+// Default styles that can be overridden by the app
+require('@solana/wallet-adapter-react-ui/styles.css');
 
 export default function Header({ passedFunctionConnectWallet, passedFunctionDisconnectWallet }) {
+
+
+
 
     return (
 
@@ -52,22 +82,15 @@ export default function Header({ passedFunctionConnectWallet, passedFunctionDisc
                         </Popover>
                     </Popover.Group>
                     <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                        <WalletConnectedContext.Consumer>{value => value ? value.slice(0, 4) + '..' + value.slice(-4) : ''}</WalletConnectedContext.Consumer>
-                        <WalletConnectedContext.Consumer>{value => !value ?
-                            <a
-                                onClick={passedFunctionConnectWallet}
-                                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                            >
-                                Connect Wallet
-                            </a>
-                            :
-                            <a
-                                onClick={passedFunctionDisconnectWallet}
-                                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700"
-                            >
-                                Disconnect Wallet
-                            </a>}
-                        </WalletConnectedContext.Consumer>
+
+
+
+
+                        <WalletMultiButton />
+
+
+
+
                     </div>
                 </div>
             </div>

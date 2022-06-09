@@ -6,58 +6,69 @@ import Header from "./components/Header";
 // because of an error related to buffer (1/2)
 import { Buffer } from 'buffer';
 
-export const WalletConnectedContext = React.createContext();
+import { FC, useMemo } from 'react';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import {
+  GlowWalletAdapter,
+  PhantomWalletAdapter,
+  SlopeWalletAdapter,
+  SolflareWalletAdapter,
+  SolletExtensionWalletAdapter,
+  SolletWalletAdapter,
+  TorusWalletAdapter,
+} from '@solana/wallet-adapter-wallets';
+import {
+  WalletModalProvider,
+  WalletDisconnectButton,
+  WalletMultiButton
+} from '@solana/wallet-adapter-react-ui';
+import { clusterApiUrl } from '@solana/web3.js';
+
+// Default styles that can be overridden by the app
+require('@solana/wallet-adapter-react-ui/styles.css');
+
 
 // because of an error related to buffer (2/2)
 window.Buffer = Buffer;
 
 function App() {
+  // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
+  const network = WalletAdapterNetwork.Devnet;
 
-  const [walletConnected, setWalletConnected] = useState(null);
+  // You can also provide a custom RPC endpoint.
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
-  const connectWallet = async () => {
-    try {
-      const { solana } = window;
-      if (solana) {
-        if (solana.isPhantom) {
-          const response = await solana.connect();
-          setWalletConnected(response.publicKey.toString());
-        } else {
-          alert('Solana object not found! Get a Phantom Wallet 👻');
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const dicconnectWallet = async () => {
-    try {
-      const { solana } = window;
-      if (!solana.isConnected) {
-        alert('Your not connected');
-        return;
-      }
-      await window.solana.disconnect();
-      setWalletConnected(null);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking and lazy loading --
+  // Only the wallets you configure here will be compiled into your application, and only the dependencies
+  // of wallets that your users connect to will be loaded.
+  const wallets = useMemo(
+    () => [
+      new PhantomWalletAdapter(),
+      new GlowWalletAdapter(),
+      new SlopeWalletAdapter(),
+      new SolflareWalletAdapter({ network }),
+      new TorusWalletAdapter(),
+    ],
+    [network]
+  );
 
   return (
     <div>
-      <WalletConnectedContext.Provider value={walletConnected}>
-        <Header
-          passedFunctionConnectWallet={connectWallet}
-          passedFunctionDisconnectWallet={dicconnectWallet} />
-        <Outlet />
-      </WalletConnectedContext.Provider>
-
-    </div >
+      <ConnectionProvider endpoint={endpoint}>
+        <WalletProvider wallets={wallets} autoConnect>
+          <WalletModalProvider>
+            <Header />
+            <Outlet />
+          </WalletModalProvider>
+        </WalletProvider>
+      </ConnectionProvider>
+    </div>
   );
 }
 
 export default App;
+
+
 
 

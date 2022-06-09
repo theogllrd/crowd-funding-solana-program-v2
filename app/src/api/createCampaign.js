@@ -1,11 +1,11 @@
 import { web3 } from '@project-serum/anchor'
-import { Campaign } from './../models/Campaign'
-import { getProgram } from './getProgram';
+import { Campaign } from '../models/Campaign'
+import getProgram from './getProgram';
 
-// 1. Define the CreateCampaign endpoint.
-export const CreateCampaign = async (name, description, image_link) => {
+// 1. Define the createCampaign endpoint.
+export const createCampaign = async (wallet, connection, name, description, image_link) => {
 
-    const program = getProgram();
+    const program = getProgram(wallet, connection);
 
     // Generate a new Keypair for our new campaign account.
     const campaign = web3.Keypair.generate()
@@ -14,7 +14,7 @@ export const CreateCampaign = async (name, description, image_link) => {
     try {
         await program.rpc.createCampaign(name, description, image_link, {
             accounts: {
-                author: window.solana.publicKey,
+                author: wallet.publicKey,
                 campaign: campaign.publicKey,
                 systemProgram: web3.SystemProgram.programId,
             },

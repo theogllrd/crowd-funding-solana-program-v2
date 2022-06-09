@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { CreateCampaign } from './../api/create-campaign';
+import { createCampaign } from '../api/createCampaign';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
 export default function CampaignForm({ classbackCampaignAdded }) {
 
@@ -7,6 +8,8 @@ export default function CampaignForm({ classbackCampaignAdded }) {
     const [description, setDescription] = useState('');
     const [image_link, setImageLink] = useState('');
 
+    const { connection } = useConnection();
+    const wallet = useWallet();
 
     const handleNameChange = event => {
         setName(event.target.value);
@@ -20,18 +23,13 @@ export default function CampaignForm({ classbackCampaignAdded }) {
         setImageLink(event.target.value);
     };
 
-    const handleClick = event => {
+    const createNewCampaign = async event => {
         event.preventDefault();
-        createCampaign();
-    };
-
-    const createCampaign = async () => {
-        // check if name is defined
         if (name) {
             // create the campaign in the blockchain
-            await CreateCampaign(name, description, image_link);
+            await createCampaign(wallet, connection, name, description, image_link);
 
-            // update de campaignList
+            // update campaignList
             classbackCampaignAdded();
 
             // set all the form inputs to blank
@@ -40,6 +38,7 @@ export default function CampaignForm({ classbackCampaignAdded }) {
             setImageLink('');
         }
     };
+
 
     return (
         <>
@@ -99,7 +98,7 @@ export default function CampaignForm({ classbackCampaignAdded }) {
                             </div>
                             <div className="px-4 py-3 text-right sm:px-6">
                                 <button
-                                    onClick={handleClick}
+                                    onClick={createNewCampaign}
                                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
                                     Create Campaign
