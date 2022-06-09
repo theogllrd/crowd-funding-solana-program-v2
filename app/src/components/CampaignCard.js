@@ -18,7 +18,7 @@ export default function CampaignCard(props) {
     }
 
     return (
-        <div className="relative max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
+        <div className="relative min-w-min bg-white rounded-lg border border-gray-200 shadow-md">
             <div className="flex justify-center p-5">
                 <Link
                     to={`/campaign/${publicKey}`}

@@ -2,13 +2,12 @@ import { web3 } from '@project-serum/anchor'
 import { Campaign } from '../models/Campaign'
 import getProgram from './getProgram';
 
-// 1. Define the createCampaign endpoint.
 export const createCampaign = async (wallet, connection, name, description, image_link) => {
 
     const program = getProgram(wallet, connection);
 
     // Generate a new Keypair for our new campaign account.
-    const campaign = web3.Keypair.generate()
+    const campaign = web3.Keypair.generate();
 
     // Send a "createCampaign" instruction with the right data and the right accounts.
     try {
@@ -26,8 +25,8 @@ export const createCampaign = async (wallet, connection, name, description, imag
     }
 
     // Fetch the newly created account from the blockchain.
-    const campaignAccount = await program.account.campaign.fetch(campaign.publicKey)
+    const campaignAccount = await program.account.campaign.fetch(campaign.publicKey);
 
     // Wrap the fetched account in a Campaign model so our frontend can display it.
-    return new Campaign(campaign.publicKey, campaignAccount)
+    return new Campaign(campaign.publicKey, campaignAccount);
 }

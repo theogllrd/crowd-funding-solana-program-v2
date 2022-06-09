@@ -42,7 +42,7 @@ export default function CampaignForm({ classbackCampaignAdded }) {
 
     return (
         <>
-            <div className="w-fit pt-4 pr-4">
+            <div className="w-fit md:pt-4 pr-4">
                 <div className="mt-5 md:mt-0 md:col-span-2">
                     <form>
                         <div className="shadow sm:rounded-md sm:overflow-hidden">
