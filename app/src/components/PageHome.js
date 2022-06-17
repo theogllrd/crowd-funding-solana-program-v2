@@ -2,7 +2,7 @@ import CampaignForm from './CampaignForm';
 import CampaignList from './CampaignList';
 import React, { useEffect, useState } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import fetchCampaigns from '../api/fetchCampaigns'
+import fetchCampaigns from '../api/fetchCampaigns';
 
 export default function PageHome() {
 
