@@ -8,7 +8,7 @@ export default function CampaignList({ campaignList, getCampaignList }) {
     );
 
     return (
-        <div className="w-screen p-4 grid md:grid-cols-3 gap-4 sm:grid-cols-1">
+        <div className="w-screen p-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {listItems}
         </div >
     );

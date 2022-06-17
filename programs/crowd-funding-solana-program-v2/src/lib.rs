@@ -7,7 +7,7 @@ pub mod crowd_funding_solana_program_v2 {
     use super::*;
 
     pub fn create_campaign(
-        ctx: Context<CreateCampaign>,
+        ctx: Context<createCampaign>,
         name: String,
         description: String,
         image_link: String,
@@ -43,7 +43,7 @@ pub mod crowd_funding_solana_program_v2 {
 
 // Definition of the context.
 #[derive(Accounts)]
-pub struct CreateCampaign<'info> {
+pub struct createCampaign<'info> {
     #[account(init, payer = author, space = Campaign::LEN)]
     pub campaign: Account<'info, Campaign>, // means this is an account of type Campaign.
     #[account(mut)]

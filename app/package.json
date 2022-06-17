@@ -6,7 +6,11 @@
     "@headlessui/react": "^1.6.3",
     "@heroicons/react": "^1.0.6",
     "@project-serum/anchor": "^0.25.0-beta.1",
-    "@solana/web3.js": "^1.43.2",
+    "@solana/wallet-adapter-base": "^0.9.5",
+    "@solana/wallet-adapter-react": "^0.15.5",
+    "@solana/wallet-adapter-react-ui": "^0.9.7",
+    "@solana/wallet-adapter-wallets": "^0.16.1",
+    "@solana/web3.js": "^1.43.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -15,6 +19,7 @@
     "buffer": "^6.0.3",
     "postcss": "^8.4.14",
     "react": "^18.1.0",
+    "react-app-rewired": "^2.2.1",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
@@ -22,9 +27,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

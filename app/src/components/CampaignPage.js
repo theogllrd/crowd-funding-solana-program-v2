@@ -1,27 +1,28 @@
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import { WalletConnectedContext } from './../App';
-import { getCampaign } from './../api/get-campaign';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { getCampaign } from '../api/getCampaign';
 import { Campaign } from './../models/Campaign';
-import { deleteCampaign } from '../api/delete-campaign';
+import { deleteCampaign } from '../api/deleteCampaign';
 
 export default function CampaignPage() {
 
     const [campaign, setCampaign] = useState(null);
     const navigate = useNavigate();
 
+    const { connection } = useConnection();
+    const wallet = useWallet();
+
     let campaignId = useParams().campaignId;
 
     const handleDeleteCampaign = async () => {
         // we call the function to delete the campaign from the blockchain
-        await deleteCampaign(campaign);
-        // we call the callback function to update the campaign list
-        //props.getCampaignList();
+        await deleteCampaign(wallet, connection, campaign);
         navigate('/home');
     }
 
     async function getData() {
-        const gettedCampaign = await getCampaign(campaignId);
+        const gettedCampaign = await getCampaign(wallet, connection, campaignId);
 
         const campaign = new Campaign(gettedCampaign.publicKey, gettedCampaign);
         setCampaign(campaign);
@@ -52,26 +53,17 @@ export default function CampaignPage() {
                         <p className="break-words mb-3 font-normal text-gray-700">
                             Author: {campaign.author_display}
                         </p>
+                        {wallet.connected ? wallet.publicKey.toBase58() == campaign.author ? <button
+                            onClick={handleDeleteCampaign}
+                            className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300">
+                            Delete
+                        </button>
+                            :
+                            <button
+                                className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                Donate
+                            </button> : null}
 
-                        <WalletConnectedContext.Consumer>
-                            {isWalletConnected => isWalletConnected ?
-                                isWalletConnected == campaign.author ?
-                                    <div>
-                                        <button
-                                            className="inline-flex items-center py-2 px-3 m-1 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
-                                            Withdraw all
-                                        </button>
-                                        <button
-                                            onClick={handleDeleteCampaign}
-                                            className="inline-flex items-center py-2 px-3 m-1 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
-                                            Delete
-                                        </button>
-                                    </div> :
-                                    <button
-                                        className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                                        Donate
-                                    </button> : null}
-                        </WalletConnectedContext.Consumer>
                     </div>
                 </div>
             </div>
